@@ -2,3 +2,12 @@
 *.mp4
 *.zip
 *.h5
+landmarks/AslLens-dataset_1.csv
+landmarks/ASLens-dataset_2.csv
+landmarks/ASLens-dataset_3.csv
+landmarks/ASLens-dataset_4_1.csv
+landmarks/ASLens-dataset_4_2.csv
+landmarks/ASLens-dataset_4_3.csv
+landmarks/ASLens-dataset_4_4.csv
+landmarks/ASLens-dataset_5.csv
+landmarks/ASLens-dataset_6.csv
