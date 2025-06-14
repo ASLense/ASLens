@@ -25,9 +25,9 @@ The primary goal of ASLens is to translate sign language gestures into readable 
 
 ## Step 1: Collecting Data
 
-ASLens uses the **[How2Sign ](https://how2sign.github.io/)** dataset, which consists of video data of sign langauge gestures (ASL language), with the corresponding text translation.
+ASLens uses the **[How2Sign ](https://how2sign.github.io/)** dataset, which consists of video data of American Sign Language (ASL) gestures, with the corresponding text translation.
 
-## Step 2: Extracting Hand - Face Keypoints using MediaPipe
+## Step 2: Extracting Hand-Face Keypoints using MediaPipe
 
 To prepare the data for model training, we use **[MediaPipe](https://ai.google.dev/edge/mediapipe/solutions/guide)** to extract key landmarks from the **hands** and **face** in each video frame. MediaPipe provides pre-trained models that detect these keypoints, which are crucial for understanding and interpreting sign language gestures.
 
@@ -37,10 +37,10 @@ After detecting the landmarks using our custom `DataExtractor` tool, we selected
 
 -   **Hand landmarks**: For each hand, we extract 21 landmarks representing the wrist, palm center, and key points along each finger (including the finger tips and joints).
     
--   **Face landmarks**: For the face, we extract 20 landmarks outlining  the mouth and lips, and 36 landmarks that outline the jawline and forehead region.
+-   **Face landmarks**: For the face, we extract 20 landmarks outlining the mouth and lips, and 36 landmarks that outline the jawline and forehead region.
 
 
-The final extracted features from each frame are stored as a tensor. The tensors of each landmark type are concatenated, resulting in a shape of [frames, 98, 3], where 98 corresponds to the combined number of landmarks. The total 98 landmarks include: 42 hand (21×2), 20 lip, and 36 facial points. Each landmark is comprised of 3 coordinates (x, y, z). These tensors are then used as input sequences for the model
+The final extracted features from each frame are stored as a tensor. The tensors of each landmark type are concatenated, resulting in a shape of [frames, 98, 3], where 98 corresponds to the combined number of landmarks. The total of 98 landmarks includes: 42 hand landmarks (21 per hand × 2 hands), 20 lip landmarks, and 36 facial landmarks. Each landmark is comprised of 3 coordinates (x, y, z). These tensors are then used as input sequences for the model. The dataset can be found **[here](https://drive.google.com/file/d/1eCOsSV-sneGgOdfwlmZ2H0bd5J_rdrWc/view)**.
 
 ![](https://github.com/ASLense/ASLens/blob/main/assets/nl-gif.gif)
 ![](https://github.com/ASLense/ASLens/blob/main/assets/l-gif.gif)
@@ -181,12 +181,12 @@ To properly evaluate the model, we decided to use the following evaluation techn
 |------------------------|---------------|                                                              
 | **BLEU**         | BLEU (Bilingual Evaluation Understudy) is a metric used to evaluate how closely a machine-generated sentence matches a reference translation. In ASLens, it helps assess how accurately our AI translates ASL into written English by comparing word sequences. It is useful for checking the overall quality and fluency of the translation.         |
 | **METEOR**       | METEOR evaluates translations based on word matches, synonyms, and word order, making it more flexible than BLEU. This is helpful because ASL does not always follow standard English grammar, so METEOR better captures translations that are semantically correct. It ensures the meaning is preserved even if the wording varies.|
-| **ROUGE-1**      | ROUGE-1 measures the overlap of individual words between the model output and the reference. It shows whether the essential words from the correct translation are being included, helping confirm that the model captures key vocabulary from ASL.|   
+| **ROUGE-1**      | ROUGE-1 measures the overlap of individual words between the model output and the reference. It shows whether the essential words from the correct translation are being included, helping confirm that the model captures key vocabulary from ASL. |   
 | **ROUGE-2**   |ROUGE-2 looks at overlapping word pairs, providing insight into how well the model preserves short phrases. This matters in ASLens since phrase structure affects clarity and readability. It helps evaluate whether the output sounds natural and flows correctly.|     
 | **ROUGE-L**   |ROUGE-L focuses on the longest matching sequence of words, reflecting how well the sentence structure is maintained. For ASLens, this helps determine if the overall order of translated signs makes sense in English. It is valuable for checking the fluency and coherence of the output.|
 | **WER**   |WER (Word Error Rate) measures the number of errors—substitutions, deletions, and insertions—between the predicted and reference text, relative to the total number of words. In ASLense, it helps us quantify how many words the model gets wrong when translating ASL into written English. This metric is especially useful for tracking accuracy and identifying areas where the model consistently misinterprets or misses signs.|     
 
-We tested each of our models on the test data and find evaluation metrics. We wi
+We tested each model on the test data and collected the evaluation metrics.
 
 ## Experiment 1: Encoder-Decoder Architecture with CharRNN as Decoder
 <div align ="center">
@@ -222,9 +222,9 @@ We tested each of our models on the test data and find evaluation metrics. We wi
 ## Human Evaluation
 These metrics cannot be directly used to fully determine the model’s performance. Therefore, we conducted a self-evaluation, where we manually inspected several examples from the test set and analyzed the generated outputs. We observed that neither of the models perfectly matches the expected sentences (as also reflected in the metric values). Instead, both models tend to hallucinate outputs influenced by the general theme of the sign language video.
 
-For example, if a video is about swimming, the model might generate text related to the sea, beach, or vacation—capturing the broader context but not the precise intended sentence. This kind of behavior is especially common with the model from **Experiment 1**.
+For example, if a video is about swimming, the model might generate text related to the sea, beach, or vacation, capturing the broader context but not the precise intended sentence. This kind of behavior is especially common with the model from **Experiment 1**.
 
-On the other hand, the model from **Experiment 2** produces more fluent and meaningful sentences, often with clearer sentiment, though it too tends to hallucinate in a way that aligns with the general context of the input.
+On the other hand, the model from **Experiment 2** produces more fluent and coherent sentences, often with clearer sentiment, although it also tends to hallucinate in a way that aligns with the general context of the input.
 # Conclusion
 We can conclude that the models have learned certain patterns and context from the videos. However, due to limitations in data and computational resources, the models are not yet able to consistently produce accurate and precise transcriptions. 
 
