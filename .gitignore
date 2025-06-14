@@ -11,3 +11,8 @@ landmarks/ASLens-dataset_4_3.csv
 landmarks/ASLens-dataset_4_4.csv
 landmarks/ASLens-dataset_5.csv
 landmarks/ASLens-dataset_6.csv
+landmarks/landmarks.rar
+Model Development/charRNN/fine tuning/model_checkpoint_ft.pt
+Model Development/charRNN/Initial training/model_checkpoint.pt
+Model Development/encoder-decoder/asl_lens_model_decoder_checkpoint.pt
+Model Development/encoder-gpt2/asl_lens_model_gpt2_checkpoint_hidden1.pt
